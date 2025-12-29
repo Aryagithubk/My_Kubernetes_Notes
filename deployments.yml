@@ -49,3 +49,22 @@ spec:
           # to see history
           # kubectl rollout history deployment.apps/myapp-deployment
 
+
+# notes
+# While individual Pods run your application instances, ReplicaSets (or Replication Controllers) manage these Pods, ensuring the correct number are always running. A Deployment builds on these components by offering a higher-level abstraction. It sits above all and manage by automating creation of replica sets.
+
+# The deployment uses the same selector as the ReplicaSet, matching on app: myapp. This ensures that the deployment's pods are correctly managed.
+
+# When you create a deployment for the first time, Kubernetes automatically triggers a rollout, creating a new deployment revision.This revision history enables you to track changes and easily revert to a previous version if necessary.
+
+# Deployment Strategies
+
+# 1) recreate strategy - in this method, we first terminate all existing instances/replicas before the new instances/replicas are deployed.
+
+# 2) rolling update strategy - in this method, we gradually terminate instances and replace with new one without impacting app availability. we do like alternating. down and replace with ne up one.
+
+# by default rolling update strategy followed. we can mention this strategy like:
+# spec:
+  # replicas: 3
+  # strategy:
+  #   type: Recreate

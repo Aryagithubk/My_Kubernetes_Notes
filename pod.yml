@@ -13,3 +13,16 @@ spec:
       # kubectl create/apply -f pod.yml
       # kubectl get pods
       # kubectl describe pod nginx
+
+# notes
+
+# Kubernetes deploys your application by encapsulating containers inside a fundamental unit called a pod.
+# we can create one container or more than one container in same pod.
+# pods resides on nodes.
+# number of pods decide on basis of space taken by one pod/space of node.
+# If your current node cannot handle the load, Kubernetes can schedule more pods on new nodes, thereby expanding your cluster’s capacity.
+# containers within the same pod can seamlessly share storage resources, which enhances inter-container communication and ensures smooth cooperation.
+
+# to start a pod - kubectl run nginx --image=nginx
+
+

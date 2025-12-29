@@ -33,4 +33,6 @@ spec:
           # to delete - kubectl delete replicaset myapp-ReplicaSet
 
           # you should use ReplicaSets (almost always managed automatically by a Deployment object). 
-          
+
+# notes
+# it works same as replication controller. the difference are that it is part of apps/v1 API. And it  introduces improvements such as the mandatory selector field.

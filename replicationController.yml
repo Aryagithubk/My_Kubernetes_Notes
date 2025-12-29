@@ -26,3 +26,9 @@ spec:
           # kubectl create/apply -f replicationController.yml
           # kubectl get replicationController
           # kubectl get pods
+
+# notes
+
+#  If pod fails, your application becomes unavailable. The Replication Controller prevents this by maintaining multiple instances of a pod. It automatically replaces any pod that fails, ensuring continuous availability whether you need one or one hundred pods.
+# It also helps distribute the load.
+# The controller can even span multiple nodes, ensuring that pods are distributed to maintain optimal performance and scalability.
