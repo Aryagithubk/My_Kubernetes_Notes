@@ -1,0 +1,73 @@
+# Services abstracting the intricacies of Pod networking, these groups communicate without the need to hard-code Pod IP addresses. Additionally, a Service can expose front-end servers to users while ensuring smooth internal communication with back-end processes.
+
+# External vs. Internal Communication
+
+# Suppose you deploy a Pod running a web application. The Kubernetes node might have an IP address like 192.168.1.2, and a laptop on the same network might use 192.168.1.10. However, the Pod's IP (e.g., 10.244.0.2) belongs to a different network range, making it directly inaccessible from the laptop.
+
+# If you SSH into the Kubernetes node using its IP (192.168.1.2), you can fetch the web page hosted by the Pod with:
+
+# curl http://10.244.0.2
+# Hello World!
+
+# if you want to access the application directly from your laptop using the node’s IP address, bypassing the need to SSH. This is where a Kubernetes Service configured as a NodePort comes into play.
+
+# A NodePort Service listens on a specific port on each node and forwards incoming external traffic to a designated port on the Pod. Essentially, it maps a port on the node (e.g., 30008) to the Pod’s target port (typically 80 for web servers). For example, from the node itself:
+
+# curl http://192.168.1.2:30008
+# Hello World!
+
+# service type - NodePort, ClusterIP, LoadBalancer
+
+# In this YAML file:
+
+# The type is set to NodePort, which means the service will be exposed on a specific port on every node.
+# The ports section includes:
+# targetPort to indicate where the web server runs inside the Pod.
+# port which defines the Service's port within the cluster.
+# nodePort representing the port accessible externally on each node.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+  selector:
+    app: myapp
+    type: front-end
+
+    # kubectl create -f service.yml
+    # kubectl get service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-end
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: myapp
+    type: back-end
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: LoadBalancer
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30008
+
+      # to check number of deployments
+      # kubectl get deploy
+
+      

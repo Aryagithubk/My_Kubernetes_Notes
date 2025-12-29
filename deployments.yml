@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-Deployment
+  labels:
+    app: myapp
+    type: front-end
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      type: front-end
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx
+
+          # kubectl create/apply -f deployment.yml
+          # kubectl get deployments
+
+          # if want to update image directly
+          # kubectl set image deployment/myapp-Deployment nginx-container=nginx:1.9.1
+
+          # if manually edit in file then
+          # kubectl edit deployment myapp-deployment --record
+
+          # to inspect details of deployment
+          # kubectl describe deployment myapp-Deployment
+
+          # When you create a deployment for the first time, Kubernetes automatically triggers a rollout, creating a new deployment revision (revision one). Later, if you update your application—for example, by changing the container image version—a new rollout generates another deployment revision (revision two). This revision history enables you to track changes and easily revert to a previous version if necessary.
+
+
+          # if wanted to rollback to previous working deployment.
+          # kubectl rollout undo deployment.apps/myapp-Deployment
+
+          # Check the status of the rollout
+          # kubectl rollout status deployment.apps/myapp-Deployment
+
+          # In the context of the command kubectl rollout status deployment.apps/myapp-Deployment, deployment.apps refers to the API Group and Version for Deployment resources within Kubernetes. 
+          # deployment is the specific resource type you are interacting with.
+          # .apps is the API Group where the Deployment resource is defined. 
+
+          # to see history
+          # kubectl rollout history deployment.apps/myapp-deployment
+

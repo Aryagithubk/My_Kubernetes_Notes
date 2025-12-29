@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myapp-ReplicationController
+  labels: 
+    app: myapp
+    type: front-end
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+      spec:
+        containers:
+         - name: nginx-containers
+           image: nginx
+
+          # use - in names and not _
+
+          # labels: app: myapp should be same in upper metadata and inside template bcz uper wala label ye btata h ki pod ko konsa label dena hai and niche template wala ye btata h ki konse label ke pod ko check krna hai and if not present then uss label ka pod create krna hai..so agar same nhi hua toh ek loop create ho jayega jo humesha check krega template me define label name se and na hone pe bnate rhega.
+
+          # after saving this file execute following commands to create the replication controller
+          # kubectl create/apply -f replicationController.yml
+          # kubectl get replicationController
+          # kubectl get pods

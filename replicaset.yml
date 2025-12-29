@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-ReplicaSet
+  labels:
+    app: myapp
+    type: front-end
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: front-end
+  template:
+    metadata: 
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end
+    spec:
+      containers:
+        - name: nginx-containers
+          image: nginx
+
+          # to create replicaset we run following commands
+          # kubectl create/apply -f replicaset.yml
+          # kubectl get replicaset
+          # kubectl get pods
+
+          # to scale replicaset
+          # kubectl scale --replicas=6 -f replicaset.yml
+          # or we can directly change in file and run commands as - kubectl replace -f replicaset.yml
+
+          # to delete - kubectl delete replicaset myapp-ReplicaSet
+
+          # you should use ReplicaSets (almost always managed automatically by a Deployment object). 
+          
